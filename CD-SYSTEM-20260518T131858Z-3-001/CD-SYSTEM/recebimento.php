@@ -82,6 +82,22 @@ required>
 <button type="submit">SALVAR</button>
 
 </form>
+<script>
+const campos = document.querySelectorAll("input");
 
+campos.forEach((campo, index) => {
+    campo.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault();
+
+            if (campos[index + 1]) {
+                campos[index + 1].focus();
+            } else {
+                document.querySelector("form").submit();
+            }
+        }
+    });
+});
+</script>
 </body>
 </html>
