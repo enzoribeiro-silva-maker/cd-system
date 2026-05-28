@@ -18,10 +18,15 @@ body{
     margin: auto;
 }
 
-input{
-    padding: 10px;
-    width: 300px;
+.resultado{
     margin-top: 20px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+button{
+    padding: 12px;
+    margin-top: 15px;
 }
 </style>
 </head>
@@ -32,27 +37,47 @@ input{
 
 <div id="reader"></div>
 
-<input
-type="text"
-id="codigo"
-placeholder="Código lido aparecerá aqui">
+<div class="resultado" id="resultado">
+Aguardando leitura...
+</div>
+
+<audio id="beep">
+    <source src="beep.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://unpkg.com/html5-qrcode"></script>
 
 <script>
-function onScanSuccess(decodedText){
-    document.getElementById("codigo").value = decodedText;
 
-    setTimeout(function(){
-        window.location.href = "recebimento.php?codigo=" + decodedText;
-    }, 800);
+function onScanSuccess(decodedText, decodedResult) {
+
+    alert("Código lido: " + decodedText);
+
+    document.getElementById("codigo").value = decodedText;
 }
 
-new Html5QrcodeScanner(
-    "reader",
-    {
-        fps: 10,
-        qrbox: 250
+const html5QrCode = new Html5Qrcode("reader");
+
+Html5Qrcode.getCameras().then(devices => {
+
+    if (devices && devices.length) {
+
+        let cameraId = devices[0].id;
+
+        html5QrCode.start(
+            cameraId,
+            {
+                fps: 10,
+                qrbox: 250
+            },
+            onScanSuccess
+        );
     }
-).render(onScanSuccess);
+
+}).catch(err => {
+    alert("Erro ao abrir câmera");
+});
+
 </script>
 
 </body>
