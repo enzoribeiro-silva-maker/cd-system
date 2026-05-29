@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Scanner iPhone</title>
+<title>Scanner CD</title>
 
 <script src="https://unpkg.com/html5-qrcode"></script>
 
@@ -20,13 +20,13 @@ body{
 
 button{
     padding: 15px;
-    margin: 10px;
+    margin: 8px;
     font-size: 18px;
 }
 
 #resultado{
     margin-top: 20px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
 }
 </style>
@@ -34,14 +34,21 @@ button{
 
 <body>
 
-<h1>Scanner de Código</h1>
+<h1>Scanner CD</h1>
+
+<h3>Escolha a operação</h3>
+
+<button onclick="operacao='entrada'">Entrada</button>
+<button onclick="operacao='saida'">Saída</button>
+<button onclick="operacao='localizar'">Localizar</button>
+
+<br><br>
 
 <button onclick="iniciarTraseira()">Abrir câmera traseira</button>
-<button onclick="iniciarFrontal()">Abrir câmera frontal</button>
 
 <div id="reader"></div>
 
-<div id="resultado">Aguardando leitura...</div>
+<div id="resultado">Escolha a operação e escaneie o QR Code</div>
 
 <audio id="beep">
     <source src="beep.mp3" type="audio/mpeg">
@@ -49,50 +56,36 @@ button{
 
 <script>
 let scanner;
-
-function produtoPorCodigo(codigo){
-    if(codigo == "789123") return "Mouse Gamer";
-    if(codigo == "456789") return "Teclado Mecânico";
-    if(codigo == "111222") return "Monitor LG";
-    return "Produto não cadastrado";
-}
+let operacao = "";
 
 function onScanSuccess(codigo){
+
+    if(operacao == ""){
+        alert("Escolha Entrada, Saída ou Localizar primeiro.");
+        return;
+    }
+
     document.getElementById("beep").play();
 
-    let produto = produtoPorCodigo(codigo);
+    if(operacao == "entrada"){
+        window.location.href = "scanner_entrada.php?codigo=" + codigo;
+    }
 
-    document.getElementById("resultado").innerHTML =
-        "Código: " + codigo + "<br>Produto: " + produto;
-}
+    if(operacao == "saida"){
+        window.location.href = "scanner_saida.php?codigo=" + codigo;
+    }
 
-function pararScanner(){
-    if(scanner){
-        scanner.stop().catch(function(){});
+    if(operacao == "localizar"){
+        window.location.href = "scanner_localizar.php?codigo=" + codigo;
     }
 }
 
 function iniciarTraseira(){
-    pararScanner();
 
     scanner = new Html5Qrcode("reader");
 
     scanner.start(
         { facingMode: { exact: "environment" } },
-        { fps: 10, qrbox: 250 },
-        onScanSuccess
-    ).catch(function(){
-        alert("Não consegui abrir a traseira. Clique em câmera frontal e depois tente novamente.");
-    });
-}
-
-function iniciarFrontal(){
-    pararScanner();
-
-    scanner = new Html5Qrcode("reader");
-
-    scanner.start(
-        { facingMode: "user" },
         { fps: 10, qrbox: 250 },
         onScanSuccess
     );
