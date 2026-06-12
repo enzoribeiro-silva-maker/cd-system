@@ -1,15 +1,14 @@
 <?php
+$host = "sql211.infinityfree.com";
+$usuario = "if0_42079078";
+$senha = "257319AM";
+$banco = "if0_42079078_cd_system";
 
-$host = "127.0.0.1";
-$user = "root";
-$pass = "";
-$db = "cd_system";
-
-$conn = mysqli_connect($host, $user, $pass, $db);
+$conn = mysqli_connect($host, $usuario, $senha, $banco);
 
 if (!$conn) {
-
-    die("Erro na conexão");
-
+    die("Erro ao conectar: " . mysqli_connect_error());
 }
 
+mysqli_set_charset($conn, "utf8");
+?>

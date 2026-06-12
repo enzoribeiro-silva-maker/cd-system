@@ -10,7 +10,7 @@
 
 <form action="validar_login.php" method="POST">
 
-    <input type="email" name="email" placeholder="Email">
+<input type="text" name="email" placeholder="Usuário ou Email">
 
     <br><br>
 

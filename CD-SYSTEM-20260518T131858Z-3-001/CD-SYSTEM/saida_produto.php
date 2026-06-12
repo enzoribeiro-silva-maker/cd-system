@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Recebimento de Produtos</title>
+<title>Saída de Produtos</title>
 
 <style>
 body{
@@ -11,11 +11,7 @@ body{
     background: #f4f4f4;
 }
 
-h1{
-    margin-bottom: 30px;
-}
-
-input{
+input, select{
     padding: 10px;
     width: 320px;
     margin-bottom: 15px;
@@ -37,9 +33,9 @@ button{
 
 <body>
 
-<h1>Recebimento de Produtos</h1>
+<h1>Saída de Produtos</h1>
 
-<form action="salvar_recebimento.php" method="POST">
+<form action="salvar_saida.php" method="POST">
 
     <input
         type="text"
@@ -49,9 +45,7 @@ button{
         autofocus
         required>
 
-    <button type="button" onclick="abrirScanner()">
-        📷 Ler QR Code
-    </button>
+    <button type="button" onclick="abrirScanner()">📷 Ler QR Code</button>
 
     <div id="reader"></div>
 
@@ -64,41 +58,28 @@ button{
     <input
         type="number"
         name="quantidade"
-        placeholder="Quantidade"
+        placeholder="Quantidade retirada"
         required>
 
-    <input
-        type="text"
-        name="corredor"
-        placeholder="Corredor"
-        required>
+    <select name="motivo" required>
+        <option value="">Selecione o motivo da saída</option>
+        <option value="Expedição">Expedição</option>
+        <option value="Venda">Venda</option>
+        <option value="Transferência">Transferência</option>
+        <option value="Perda">Perda</option>
+        <option value="Avaria">Avaria</option>
+    </select>
 
-    <input
-        type="number"
-        name="prateleira"
-        placeholder="Prateleira"
-        required>
-
-    <input
-        type="number"
-        name="nivel"
-        placeholder="Nível"
-        required>
-
-    <button type="submit">
-        SALVAR
-    </button>
+    <button type="submit">REGISTRAR SAÍDA</button>
 
 </form>
 
 <script>
-const campos = document.querySelectorAll("input");
+const campos = document.querySelectorAll("input, select");
 
 campos.forEach((campo, index) => {
     campo.addEventListener("keydown", function(event) {
-
         if(event.key === "Enter"){
-
             event.preventDefault();
 
             if(campos[index + 1]){
@@ -106,9 +87,7 @@ campos.forEach((campo, index) => {
             }else{
                 document.querySelector("form").submit();
             }
-
         }
-
     });
 });
 </script>
@@ -119,7 +98,6 @@ campos.forEach((campo, index) => {
 let scanner;
 
 function abrirScanner(){
-
     if(scanner){
         return;
     }
@@ -127,31 +105,21 @@ function abrirScanner(){
     scanner = new Html5Qrcode("reader");
 
     scanner.start(
-        {
-            facingMode: "environment"
-        },
+        { facingMode: "environment" },
         {
             fps: 10,
             qrbox: 250
         },
-
         function(decodedText){
-
             document.getElementById("codigo_barras").value = decodedText;
 
             scanner.stop().then(() => {
                 scanner.clear();
                 scanner = null;
             });
-
         },
-
-        function(errorMessage){
-            // Ignora erros de leitura
-        }
-
+        function(errorMessage){}
     );
-
 }
 </script>
 
