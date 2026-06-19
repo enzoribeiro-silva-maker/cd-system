@@ -1,177 +1,109 @@
 <?php
-
 include "conectar.php";
 
-$busca = $_GET['busca'];
+$busca = $_GET['busca'] ?? '';
 
-$sql = "SELECT * FROM produtos
-WHERE nome LIKE '%$busca%'
-OR codigo LIKE '%$busca%'";
+if ($busca == '') {
+    echo "Nenhum produto informado.<br><a href='localizar.php'>Voltar</a>";
+    exit;
+}
+
+$sql = "SELECT * FROM produtos 
+        WHERE codigo_barras = '$busca'
+        OR codigo = '$busca'
+        OR nome LIKE '%$busca%'";
 
 $resultado = mysqli_query($conn, $sql);
 
+if (!$resultado) {
+    die("Erro na consulta: " . mysqli_error($conn));
+}
+
 $produto = mysqli_fetch_assoc($resultado);
 
-$corredorProduto = strtoupper($produto['corredor']);
+if (!$produto) {
+    echo "Produto não encontrado.<br><a href='localizar.php'>Voltar</a>";
+    exit;
+}
+
+$corredorProduto = $produto['corredor'];
 $prateleiraProduto = $produto['prateleira'];
-
-$rota = "";
-
-// ROTAS
-
-if($corredorProduto == "A"){
-
-    $rota = "ENTRADA → A1 → A2 → A3 → A4";
-
-}
-
-elseif($corredorProduto == "B"){
-
-    $rota = "ENTRADA → B1 → B2 → B3 → B4";
-
-}
-
-elseif($corredorProduto == "C"){
-
-    $rota = "ENTRADA → C1 → C2 → C3 → C4";
-
-}
-
 ?>
 
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
 <meta charset="UTF-8">
-
 <title>Mapa do CD</title>
 
 <style>
-
 body{
     font-family: Arial;
+    padding: 40px;
+    background: #f4f4f4;
 }
 
-.linha{
-    margin-bottom:20px;
+.grade{
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    gap: 15px;
+    margin-top: 30px;
 }
 
-.local{
-
-    display:inline-block;
-    width:80px;
-    height:80px;
-    border:1px solid black;
-    text-align:center;
-    line-height:80px;
-    margin:5px;
-
+.posicao{
+    width: 80px;
+    height: 80px;
+    background: #ddd;
+    border: 2px solid #999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
 }
 
-.produto{
-
-    background-color: yellow;
-    font-weight:bold;
-
+.ativo{
+    background: red;
+    color: white;
+    border: 3px solid black;
 }
-
-.rota{
-
-    margin-top:30px;
-    font-size:22px;
-    color:green;
-    font-weight:bold;
-
-}
-
 </style>
-
 </head>
 
 <body>
 
 <h1>Mapa do CD</h1>
 
-<h2>
-Produto: <?php echo $produto['nome']; ?>
-</h2>
+<p><strong>Produto:</strong> <?php echo $produto['nome']; ?></p>
+<p><strong>Estoque:</strong> <?php echo $produto['estoque']; ?></p>
+<p><strong>Localização:</strong> Corredor <?php echo $produto['corredor']; ?> - Prateleira <?php echo $produto['prateleira']; ?> - Nível <?php echo $produto['nivel']; ?></p>
 
-<h3>
-
-Localização:
-Corredor <?php echo $produto['corredor']; ?>
--
-Prateleira <?php echo $produto['prateleira']; ?>
-
-</h3>
+<div class="grade">
 
 <?php
-
-$corredores = ['A', 'B', 'C'];
+$corredores = ['A','B','C'];
 
 foreach($corredores as $corredor){
+    for($p = 1; $p <= 4; $p++){
 
-    echo "<div class='linha'>";
+        $ativo = ($corredor == $corredorProduto && $p == $prateleiraProduto) ? "ativo" : "";
 
-    for($i = 1; $i <= 4; $i++){
-
-        $classe = "local";
-
-        if($corredor == $corredorProduto
-           && $i == $prateleiraProduto){
-
-            $classe .= " produto";
-        }
-
-        echo "<div class='$classe'>";
-
-        echo $corredor . $i;
-
-        echo "</div>";
+        echo "<div class='posicao $ativo'>$corredor$p</div>";
     }
-
-    echo "</div>";
 }
-
-?>
-
-<div class="rota">
-
-<?php
-echo $rota;
 ?>
 
 </div>
 
-<br><br>
+<br>
+<a href="localizar.php">Voltar</a>
+<audio id="beep" src="beep.mp3"></audio>
 
-<button onclick="tocarSom()">
+<button onclick="tocarSom()">🔊 Testar som</button>
 
-TESTAR SOM
-
-</button>
-
-<audio id="beep">
-    <source src="beep.mp3" type="audio/mpeg">
-</audio>
 <script>
-
 function tocarSom(){
-
     document.getElementById("beep").play();
-
 }
-
-// TOCA AUTOMATICAMENTE
-
-window.onload = function(){
-
-    tocarSom();
-
-}
-
 </script>
 
 </body>
