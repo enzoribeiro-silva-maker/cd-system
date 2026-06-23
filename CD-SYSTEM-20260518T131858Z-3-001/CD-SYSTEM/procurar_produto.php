@@ -369,6 +369,6 @@ function pararBusca() {
     document.getElementById("formAtualizar").style.display = "block";
 }
 </script>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

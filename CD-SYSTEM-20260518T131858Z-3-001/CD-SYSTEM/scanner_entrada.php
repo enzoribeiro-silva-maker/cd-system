@@ -105,6 +105,6 @@ $codigo = $_GET['codigo'] ?? "";
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

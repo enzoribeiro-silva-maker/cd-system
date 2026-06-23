@@ -155,6 +155,6 @@ if(mysqli_query($conn, $sqlMov)){
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

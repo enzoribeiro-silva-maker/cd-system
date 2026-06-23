@@ -121,6 +121,6 @@ $produto = mysqli_fetch_assoc($resultado);
 <?php } ?>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

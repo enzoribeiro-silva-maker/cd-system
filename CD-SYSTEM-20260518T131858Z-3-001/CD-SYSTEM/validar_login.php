@@ -96,6 +96,6 @@ if(mysqli_num_rows($resultado) > 0){
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

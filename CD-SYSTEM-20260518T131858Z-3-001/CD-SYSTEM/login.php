@@ -99,8 +99,7 @@ button:hover {
 }
 </style>
 </head>
-
-<body>
+<script src="assets/tema.js"></script><body>
 
 <div class="card">
 

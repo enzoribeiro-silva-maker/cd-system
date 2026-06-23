@@ -85,7 +85,6 @@ if (mysqli_query($conn, $sql)) {
 }
 </style>
 </head>
-
 <body>
 
 <div class="topo">
@@ -136,6 +135,6 @@ if (mysqli_query($conn, $sql)) {
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

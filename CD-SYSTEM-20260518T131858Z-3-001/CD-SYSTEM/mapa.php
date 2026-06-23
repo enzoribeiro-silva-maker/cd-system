@@ -293,6 +293,6 @@ function tocarSom() {
     document.getElementById("beep").play();
 }
 </script>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
 <meta charset="UTF-8">
 <title>Dashboard - FindWare</title>
 <link rel="stylesheet" href="assets/style.css">
+<script src="assets/tema.js" defer></script>
 
 <style>
 .cards-dashboard {
@@ -328,6 +329,6 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>

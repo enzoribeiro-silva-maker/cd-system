@@ -128,6 +128,6 @@ $resultado = mysqli_query($conn, $sql);
     </div>
 
 </div>
-
+<script src="assets/tema.js"></script>
 </body>
 </html>
