@@ -107,6 +107,25 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
 .card + .card {
     margin-top: 24px;
 }
+.acoes-tabela {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.acoes-tabela .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+}
+
+.btn-perigo {
+    background: #b91c1c;
+    color: white;
+}
+
+.btn-perigo:hover {
+    background: #991b1b;
+}
 
 @media(max-width: 1100px) {
     .cards-dashboard {
@@ -149,7 +168,8 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
             </div>
         </div>
 
-        <div class="card-indicador">
+        <div class="card-ind
+        icador">
             <h3>Total em Estoque</h3>
             <div class="numero">
                 <?php echo $totalEstoque['total'] ?? 0; ?>
@@ -221,6 +241,12 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
                         <td>
                             <a href="mapa.php?busca=<?php echo $produto['codigo']; ?>" class="btn">
                                 Ver Mapa
+                            </a>
+
+                            <a 
+                               href="excluir_produto.php?id=<?php echo $produto['id']; ?>" class="btn btn-perigo"
+                               onclick="return confirm('Tem certeza que deseja excluir este produto?')">
+                                Excluir
                             </a>
                         </td>
                     </tr>
