@@ -1,4 +1,4 @@
-<?php
+   <?php
 include "conectar.php";
 
 $codigo_barras = $_POST['codigo_barras'];

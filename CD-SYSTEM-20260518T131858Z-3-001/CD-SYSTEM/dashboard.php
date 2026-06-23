@@ -8,6 +8,7 @@ $saidas = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM 
 $estoqueBaixo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total FROM produtos WHERE estoque <= 5"));
 
 $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movimentacao DESC LIMIT 5");
+$produtos = mysqli_query($conn, "SELECT * FROM produtos ORDER BY nome ASC");
 ?>
 
 <!DOCTYPE html>
@@ -149,7 +150,7 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
     <div class="card">
 
         <div class="titulo">
-            <h2>Últimas Movimentações</h2>
+            <h2>Resumo das últimas movimentações</h2> libera o terminal!!!!
             <p>Confira os últimos registros de entrada e saída do estoque.</p>
         </div>
 
