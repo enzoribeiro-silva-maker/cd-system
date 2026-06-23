@@ -138,6 +138,7 @@ function abrirScanner(){
         function(decodedText){
 
             document.getElementById("codigo_barras").value = decodedText;
+buscarProduto(decodedText);
 
             scanner.stop().then(() => {
                 scanner.clear();
@@ -151,6 +152,20 @@ function abrirScanner(){
         }
 
     );
+    function buscarProduto(codigo){
+    fetch("buscar_por_codigo.php?codigo=" + encodeURIComponent(codigo))
+    .then(response => response.json())
+    .then(data => {
+        if(data.encontrado){
+            document.querySelector('input[name="produto"]').value = data.nome;
+            document.querySelector('input[name="corredor"]').value = data.corredor;
+            document.querySelector('input[name="prateleira"]').value = data.prateleira;
+            document.querySelector('input[name="nivel"]').value = data.nivel;
+        }else{
+            alert("Produto não encontrado no cadastro.");
+        }
+    });
+}
 
 }
 </script>

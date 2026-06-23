@@ -10,23 +10,26 @@ $nivel = $_POST['nivel'];
 
 $localizacao = $corredor . "-" . $prateleira . "-N" . $nivel;
 
-$verifica = mysqli_query($conn, "SELECT * FROM produtos WHERE codigo_barras = '$codigo_barras'");
+$verifica = mysqli_query($conn, "SELECT * FROM produtos 
+WHERE codigo_barras = '$codigo_barras'
+OR codigo = '$codigo_barras'");
 
-if (mysqli_num_rows($verifica) > 0) {
+if(mysqli_num_rows($verifica) > 0){
 
     $sqlProduto = "UPDATE produtos
                    SET estoque = estoque + $quantidade,
                        corredor = '$corredor',
                        prateleira = '$prateleira',
                        nivel = '$nivel'
-                   WHERE codigo_barras = '$codigo_barras'";
+                   WHERE codigo_barras = '$codigo_barras'
+                   OR codigo = '$codigo_barras'";
 
-} else {
+}else{
 
     $sqlProduto = "INSERT INTO produtos
-                   (codigo_barras, nome, corredor, prateleira, nivel, estoque)
+                   (codigo_barras, codigo, nome, corredor, prateleira, nivel, estoque)
                    VALUES
-                   ('$codigo_barras', '$produto', '$corredor', '$prateleira', '$nivel', $quantidade)";
+                   ('$codigo_barras', '$codigo_barras', '$produto', '$corredor', '$prateleira', '$nivel', $quantidade)";
 }
 
 mysqli_query($conn, $sqlProduto);
@@ -37,15 +40,11 @@ VALUES
 ('$codigo_barras', '$produto', $quantidade, '$localizacao', 'ENTRADA', NOW())";
 
 if(mysqli_query($conn, $sqlMov)){
-
     echo "<h2>Recebimento salvo com sucesso!</h2>";
     echo "<a href='recebimento.php'>Novo recebimento</a><br>";
     echo "<a href='movimentacoes.php'>Ver movimentações</a><br>";
     echo "<a href='menu.php'>Voltar ao menu</a>";
-
 }else{
-
     echo "Erro: " . mysqli_error($conn);
-
 }
 ?>

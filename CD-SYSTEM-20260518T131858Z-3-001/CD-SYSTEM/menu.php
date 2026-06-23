@@ -19,7 +19,7 @@ $estoqueBaixo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>CD-SYSTEM</title>
+<title>FindWare</title>
 
 <style>
 *{
@@ -149,8 +149,8 @@ body{
 
 <div class="topo">
     <div>
-        <h1>CD-SYSTEM</h1>
-        <span>Sistema de Localização e Controle de Estoque</span>
+    <h1>FindWare</h1>
+<span>Sistema Inteligente de Localização de Produtos</span>
     </div>
 
     <span>Usuário: <?php echo $_SESSION['usuario']; ?></span>
@@ -200,7 +200,7 @@ body{
     </div>
 
     <div class="rodape">
-        CD-SYSTEM • Controle operacional de produtos em centro de distribuição
+        FindWare • Sistema Inteligente de Localização de Produtos
     </div>
 
 </div>
