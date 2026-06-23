@@ -1,6 +1,11 @@
 <?php
+session_start();
 
-header("Location: menu.php");
-exit;
-
+if(isset($_SESSION['usuario'])){
+    header("Location: menu.php");
+    exit;
+}else{
+    header("Location: login.php");
+    exit;
+}
 ?>

@@ -5,80 +5,107 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Saída de Produtos</title>
+<title>Saída de Produtos - FindWare</title>
+<link rel="stylesheet" href="assets/style.css">
 
 <style>
-body{
-    font-family: Arial, sans-serif;
-    padding: 40px;
-    background: #f4f4f4;
+.aviso-saida {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    color: #9a3412;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    font-size: 14px;
 }
 
-h1{
-    margin-bottom: 30px;
+.btn-saida {
+    background: #b91c1c;
 }
 
-input{
-    padding: 10px;
-    width: 320px;
-    margin-bottom: 15px;
-    display: block;
-}
-
-button{
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-bottom: 15px;
-    background: #c62828;
-    color: white;
-    border: none;
-}
-
-button:hover{
-    background: #b71c1c;
+.btn-saida:hover {
+    background: #991b1b;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Saída de Produtos</h1>
+<div class="topo">
+    <div>
+        <h1>FindWare</h1>
+        <span>Sistema Inteligente de Localização de Produtos</span>
+    </div>
 
-<form action="salvar_saida.php" method="POST">
+    <span>Saída de Produtos</span>
+</div>
 
-    <input
-        type="text"
-        name="codigo_barras"
-        placeholder="Código de Barras"
-        required>
+<div class="container">
 
-    <input
-        type="text"
-        name="produto"
-        placeholder="Produto"
-        required>
+    <div class="card">
 
-    <input
-        type="number"
-        name="quantidade"
-        placeholder="Quantidade"
-        required>
+        <div class="titulo">
+            <h2>Registrar Saída de Produto</h2>
+            <p>Registre a retirada de produtos do estoque por expedição, perda, transferência ou outro motivo.</p>
+        </div>
 
-    <input
-        type="text"
-        name="motivo"
-        placeholder="Motivo da saída (Expedição, Perda, Transferência...)"
-        required>
+        <div class="aviso-saida">
+            Atenção: essa operação reduz a quantidade disponível no estoque.
+        </div>
 
-    <button type="submit">
-        REGISTRAR SAÍDA
-    </button>
+        <form action="salvar_saida.php" method="POST">
 
-</form>
+            <div class="form-grid">
 
-<br>
+                <div class="form-group">
+                    <label>Código de barras / QR Code</label>
+                    <input
+                        type="text"
+                        name="codigo_barras"
+                        placeholder="Ex: 789123"
+                        required>
+                </div>
 
-<a href="menu.php">← Voltar ao Menu</a>
+                <div class="form-group">
+                    <label>Produto</label>
+                    <input
+                        type="text"
+                        name="produto"
+                        placeholder="Nome do produto"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantidade</label>
+                    <input
+                        type="number"
+                        name="quantidade"
+                        placeholder="Ex: 5"
+                        min="1"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Motivo da saída</label>
+                    <input
+                        type="text"
+                        name="motivo"
+                        placeholder="Expedição, Perda, Transferência..."
+                        required>
+                </div>
+
+            </div>
+
+            <div class="acoes">
+                <button type="submit" class="btn-saida">Registrar Saída</button>
+                <a href="menu.php" class="btn btn-secundario">Voltar ao Menu</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

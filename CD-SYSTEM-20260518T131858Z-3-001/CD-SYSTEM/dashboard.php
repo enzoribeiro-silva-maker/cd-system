@@ -14,115 +14,194 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Dashboard</title>
+<title>Dashboard - FindWare</title>
+<link rel="stylesheet" href="assets/style.css">
 
 <style>
-body{
-    font-family: Arial;
-    background: #f4f4f4;
-    padding: 40px;
+.cards-dashboard {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
-.cards{
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
-
-.card{
+.card-indicador {
     background: white;
-    width: 220px;
+    border: 1px solid #d5dbe3;
+    border-radius: 8px;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px #ccc;
 }
 
-.numero{
-    font-size: 35px;
+.card-indicador h3 {
+    font-size: 14px;
+    color: #64748b;
+    margin-bottom: 10px;
+}
+
+.numero {
+    font-size: 34px;
     font-weight: bold;
-    color: green;
+    color: #17202c;
 }
 
-table{
-    margin-top: 30px;
+.numero.entrada {
+    color: #166534;
+}
+
+.numero.saida {
+    color: #991b1b;
+}
+
+.numero.alerta {
+    color: #b45309;
+}
+
+.tabela-container {
     width: 100%;
-    border-collapse: collapse;
-    background: white;
+    overflow-x: auto;
 }
 
-th, td{
-    padding: 12px;
-    border: 1px solid #ccc;
-    text-align: left;
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-th{
-    background: #222;
-    color: white;
+.badge.entrada {
+    background: #dcfce7;
+    color: #166534;
 }
 
-a{
-    display:inline-block;
-    margin-top:20px;
+.badge.saida {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.vazio {
+    text-align: center;
+    padding: 28px;
+    color: #64748b;
+}
+
+@media(max-width: 1100px) {
+    .cards-dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .cards-dashboard {
+        grid-template-columns: 1fr;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<h1>Dashboard do CD</h1>
-
-<div class="cards">
-    <div class="card">
-        <h3>Total de Produtos</h3>
-        <div class="numero"><?php echo $totalProdutos['total']; ?></div>
+<div class="topo">
+    <div>
+        <h1>FindWare</h1>
+        <span>Sistema Inteligente de Localização de Produtos</span>
     </div>
 
-    <div class="card">
-        <h3>Total em Estoque</h3>
-        <div class="numero"><?php echo $totalEstoque['total'] ?? 0; ?></div>
-    </div>
-
-    <div class="card">
-        <h3>Entradas</h3>
-        <div class="numero"><?php echo $entradas['total']; ?></div>
-    </div>
-
-    <div class="card">
-        <h3>Saídas</h3>
-        <div class="numero"><?php echo $saidas['total']; ?></div>
-    </div>
-
-    <div class="card">
-        <h3>Estoque Baixo</h3>
-        <div class="numero"><?php echo $estoqueBaixo['total']; ?></div>
-    </div>
+    <span>Dashboard do CD</span>
 </div>
 
-<h2>Últimas Movimentações</h2>
+<div class="container">
 
-<table>
-<tr>
-    <th>Produto</th>
-    <th>Quantidade</th>
-    <th>Tipo</th>
-    <th>Localização</th>
-    <th>Data</th>
-</tr>
+    <div class="titulo">
+        <h2>Dashboard do Centro de Distribuição</h2>
+        <p>Visão geral dos produtos, estoque e movimentações do sistema.</p>
+    </div>
 
-<?php while($mov = mysqli_fetch_assoc($ultimas)): ?>
-<tr>
-    <td><?php echo $mov['produto']; ?></td>
-    <td><?php echo $mov['quantidade']; ?></td>
-    <td><?php echo $mov['tipo']; ?></td>
-    <td><?php echo $mov['localizacao']; ?></td>
-    <td><?php echo $mov['data_movimentacao']; ?></td>
-</tr>
-<?php endwhile; ?>
+    <div class="cards-dashboard">
 
-</table>
+        <div class="card-indicador">
+            <h3>Total de Produtos</h3>
+            <div class="numero"><?php echo $totalProdutos['total']; ?></div>
+        </div>
 
-<a href="menu.php">Voltar ao menu</a>
+        <div class="card-indicador">
+            <h3>Total em Estoque</h3>
+            <div class="numero"><?php echo $totalEstoque['total'] ?? 0; ?></div>
+        </div>
+
+        <div class="card-indicador">
+            <h3>Entradas</h3>
+            <div class="numero entrada"><?php echo $entradas['total']; ?></div>
+        </div>
+
+        <div class="card-indicador">
+            <h3>Saídas</h3>
+            <div class="numero saida"><?php echo $saidas['total']; ?></div>
+        </div>
+
+        <div class="card-indicador">
+            <h3>Estoque Baixo</h3>
+            <div class="numero alerta"><?php echo $estoqueBaixo['total']; ?></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="titulo">
+            <h2>Últimas Movimentações</h2>
+            <p>Confira os últimos registros de entrada e saída do estoque.</p>
+        </div>
+
+        <div class="tabela-container">
+
+            <table>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Tipo</th>
+                    <th>Localização / Motivo</th>
+                    <th>Data</th>
+                </tr>
+
+                <?php if(mysqli_num_rows($ultimas) > 0): ?>
+
+                    <?php while($mov = mysqli_fetch_assoc($ultimas)): ?>
+                    <tr>
+                        <td><?php echo $mov['produto']; ?></td>
+                        <td><?php echo $mov['quantidade']; ?></td>
+                        <td>
+                            <span class="badge <?php echo strtolower($mov['tipo']); ?>">
+                                <?php echo $mov['tipo']; ?>
+                            </span>
+                        </td>
+                        <td><?php echo $mov['localizacao']; ?></td>
+                        <td><?php echo $mov['data_movimentacao']; ?></td>
+                    </tr>
+                    <?php endwhile; ?>
+
+                <?php else: ?>
+
+                    <tr>
+                        <td colspan="5" class="vazio">
+                            Nenhuma movimentação registrada até o momento.
+                        </td>
+                    </tr>
+
+                <?php endif; ?>
+
+            </table>
+
+        </div>
+
+        <div class="acoes">
+            <a href="menu.php" class="btn btn-secundario">Voltar ao Menu</a>
+            <a href="movimentacoes.php" class="btn">Ver Histórico Completo</a>
+        </div>
+
+    </div>
+
+</div>
 
 </body>
 </html>

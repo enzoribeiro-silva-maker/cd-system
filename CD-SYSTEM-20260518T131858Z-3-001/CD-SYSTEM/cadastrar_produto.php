@@ -5,64 +5,191 @@
 <title>Cadastro de Produtos - FindWare</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-
-body{background:#eef1f5;}
-
-.topo{
-    background:#17202c;
-    color:white;
-    padding:20px 35px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-.topo p{color:#cbd5e1;}
-
-.container{padding:30px;}
-
-.card{
-    background:white;
-    max-width:760px;
-    padding:25px;
-    border-radius:8px;
-    border:1px solid #d5dbe3;
+body {
+    background: #eef1f5;
+    color: #17202c;
 }
 
-input{
-    width:100%;
-    padding:12px;
-    margin-bottom:15px;
-    border:1px solid #ccc;
-    border-radius:5px;
+.topo {
+    height: 72px;
+    background: #17202c;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 36px;
 }
 
-button{
-    background:#17202c;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:5px;
-    cursor:pointer;
+.topo h1 {
+    font-size: 22px;
 }
 
-.qr-box{
-    margin:15px 0;
-    padding:15px;
-    background:#f9fafb;
-    border:1px solid #d5dbe3;
-    display:none;
+.topo span {
+    color: #cbd5e1;
+    font-size: 14px;
 }
 
-.qr-box img{
-    width:160px;
-    height:160px;
+.container {
+    padding: 30px 36px;
 }
 
-.voltar{
-    display:inline-block;
-    margin-top:15px;
-    text-decoration:none;
-    color:#17202c;
-    font-weight:bold;
+.card {
+    background: white;
+    border: 1px solid #d5dbe3;
+    border-radius: 8px;
+    padding: 28px;
+    max-width: 900px;
+}
+
+.titulo {
+    margin-bottom: 25px;
+}
+
+.titulo h2 {
+    font-size: 24px;
+    color: #111827;
+}
+
+.titulo p {
+    color: #64748b;
+    margin-top: 6px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #374151;
+    margin-bottom: 6px;
+}
+
+input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    background: #fff;
+}
+
+input:focus {
+    outline: none;
+    border-color: #17202c;
+}
+
+.qr-box {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9fafb;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    display: none;
+}
+
+.qr-content {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.qr-box img {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #d5dbe3;
+    padding: 6px;
+    background: white;
+}
+
+.qr-info strong {
+    display: block;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.qr-info p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.acoes {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+button {
+    background: #17202c;
+    color: white;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #0f172a;
+}
+
+.voltar {
+    text-decoration: none;
+    color: #17202c;
+    font-weight: bold;
+    padding: 12px 18px;
+    border-radius: 6px;
+    border: 1px solid #d5dbe3;
+    background: #f9fafb;
+}
+
+.voltar:hover {
+    background: #e5e7eb;
+}
+
+@media(max-width: 800px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: span 1;
+    }
+
+    .qr-content {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .acoes {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    button, .voltar {
+        width: 100%;
+        text-align: center;
+    }
 }
 </style>
 </head>
@@ -70,58 +197,97 @@ button{
 <body>
 
 <div class="topo">
-    <h1>FindWare</h1>
-    <p>Sistema Inteligente de Localização de Produtos</p>
+    <div>
+        <h1>FindWare</h1>
+        <span>Sistema Inteligente de Localização de Produtos</span>
+    </div>
+
+    <span>Cadastro de Produtos</span>
 </div>
 
 <div class="container">
-<div class="card">
 
-<h2>Cadastro de Produto</h2>
-<br>
+    <div class="card">
 
-<form action="salvar_produto.php" method="POST">
+        <div class="titulo">
+            <h2>Cadastrar Produto</h2>
+            <p>Registre um novo item no estoque e gere automaticamente seu código para localização.</p>
+        </div>
 
-<input type="text" name="nome" placeholder="Nome do produto" required>
+        <form action="salvar_produto.php" method="POST">
 
-<input type="text" id="codigo" name="codigo" placeholder="Código interno" required oninput="gerarQRCode()">
+            <div class="form-grid">
 
-<input type="text" id="codigo_barras" name="codigo_barras" placeholder="Código de barras / QR Code" readonly>
+                <div class="form-group full">
+                    <label>Nome do produto</label>
+                    <input type="text" name="nome" placeholder="Ex: Mouse Gamer" required>
+                </div>
 
-<div class="qr-box" id="qrBox">
-    <strong>QR Code gerado:</strong><br><br>
-    <img id="qrImg" src="">
-</div>
+                <div class="form-group">
+                    <label>Código interno</label>
+                    <input type="text" id="codigo" name="codigo" placeholder="Ex: 789123" required oninput="gerarQRCode()">
+                </div>
 
-<input type="number" name="estoque" placeholder="Quantidade em estoque" required>
+                <div class="form-group">
+                    <label>Código de barras / QR Code</label>
+                    <input type="text" id="codigo_barras" name="codigo_barras" placeholder="Gerado automaticamente" readonly>
+                </div>
 
-<input type="text" name="corredor" placeholder="Corredor (A, B, C...)" required>
+                <div class="form-group">
+                    <label>Quantidade em estoque</label>
+                    <input type="number" name="estoque" placeholder="Ex: 10" min="0" required>
+                </div>
 
-<input type="number" name="prateleira" placeholder="Prateleira" required>
+                <div class="form-group">
+                    <label>Corredor</label>
+                    <input type="text" name="corredor" placeholder="Ex: A" required>
+                </div>
 
-<input type="number" name="nivel" placeholder="Nível" required>
+                <div class="form-group">
+                    <label>Prateleira</label>
+                    <input type="number" name="prateleira" placeholder="Ex: 3" min="1" required>
+                </div>
 
-<button type="submit">Salvar Produto</button>
+                <div class="form-group">
+                    <label>Nível</label>
+                    <input type="number" name="nivel" placeholder="Ex: 2" min="1" required>
+                </div>
 
-</form>
+            </div>
 
-<br>
-<a class="voltar" href="menu.php">← Voltar ao Menu</a>
+            <div class="qr-box" id="qrBox">
+                <div class="qr-content">
+                    <img id="qrImg" src="">
 
-</div>
+                    <div class="qr-info">
+                        <strong>QR Code gerado automaticamente</strong>
+                        <p>Esse código poderá ser usado pelo scanner para entrada, saída e localização do produto.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="acoes">
+                <button type="submit">Salvar Produto</button>
+                <a class="voltar" href="menu.php">Voltar ao Menu</a>
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
 
 <script>
-function gerarQRCode(){
+function gerarQRCode() {
     let codigo = document.getElementById("codigo").value.trim();
 
     document.getElementById("codigo_barras").value = codigo;
 
-    if(codigo !== ""){
+    if (codigo !== "") {
         document.getElementById("qrBox").style.display = "block";
         document.getElementById("qrImg").src =
             "https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=" + encodeURIComponent(codigo);
-    }else{
+    } else {
         document.getElementById("qrBox").style.display = "none";
         document.getElementById("qrImg").src = "";
     }

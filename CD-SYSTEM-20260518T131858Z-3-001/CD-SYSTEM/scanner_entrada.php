@@ -2,22 +2,109 @@
 $codigo = $_GET['codigo'] ?? "";
 ?>
 
-<h1>Entrada de Produto</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Entrada por Scanner - FindWare</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
 
-<form action="salvar_recebimento.php" method="POST">
+<body>
 
-<input type="text" name="codigo_barras" value="<?php echo $codigo; ?>" placeholder="Código" required><br><br>
+<div class="topo">
+    <div>
+        <h1>FindWare</h1>
+        <span>Sistema Inteligente de Localização de Produtos</span>
+    </div>
 
-<input type="text" name="produto" placeholder="Produto" required><br><br>
+    <span>Entrada por Scanner</span>
+</div>
 
-<input type="number" name="quantidade" placeholder="Quantidade recebida" required><br><br>
+<div class="container">
 
-<input type="text" name="corredor" placeholder="Corredor" required><br><br>
+    <div class="card">
 
-<input type="number" name="prateleira" placeholder="Prateleira" required><br><br>
+        <div class="titulo">
+            <h2>Confirmar Entrada de Produto</h2>
+            <p>Complete os dados do produto lido pelo scanner e registre a entrada no estoque.</p>
+        </div>
 
-<input type="number" name="nivel" placeholder="Nível" required><br><br>
+        <form action="salvar_recebimento.php" method="POST">
 
-<button type="submit">Confirmar Entrada</button>
+            <div class="form-grid">
 
-</form>
+                <div class="form-group">
+                    <label>Código de barras / QR Code</label>
+                    <input 
+                        type="text" 
+                        name="codigo_barras" 
+                        value="<?php echo $codigo; ?>" 
+                        placeholder="Código do produto" 
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Produto</label>
+                    <input 
+                        type="text" 
+                        name="produto" 
+                        placeholder="Nome do produto" 
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantidade recebida</label>
+                    <input 
+                        type="number" 
+                        name="quantidade" 
+                        placeholder="Ex: 10" 
+                        min="1"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Corredor</label>
+                    <input 
+                        type="text" 
+                        name="corredor" 
+                        placeholder="Ex: A" 
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prateleira</label>
+                    <input 
+                        type="number" 
+                        name="prateleira" 
+                        placeholder="Ex: 3" 
+                        min="1"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nível</label>
+                    <input 
+                        type="number" 
+                        name="nivel" 
+                        placeholder="Ex: 2" 
+                        min="1"
+                        required>
+                </div>
+
+            </div>
+
+            <div class="acoes">
+                <button type="submit">Confirmar Entrada</button>
+                <a href="scanner.php" class="btn btn-secundario">Voltar ao Scanner</a>
+                <a href="menu.php" class="btn btn-secundario">Voltar ao Menu</a>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -9,67 +9,42 @@ $resultado = mysqli_query($conn, $sql);
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Histórico de Movimentações</title>
+<title>Histórico de Movimentações - FindWare</title>
+<link rel="stylesheet" href="assets/style.css">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+.tabela-container {
+    width: 100%;
+    overflow-x: auto;
 }
 
-body{
-    background:#eef1f5;
-    color:#1f2937;
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.topo{
-    background:#17202c;
-    color:white;
-    padding:22px 36px;
+.badge.entrada {
+    background: #dcfce7;
+    color: #166534;
 }
 
-.container{
-    padding:28px 36px;
+.badge.saida {
+    background: #fee2e2;
+    color: #991b1b;
 }
 
-table{
-    width:100%;
-    border-collapse:collapse;
-    background:white;
-    border:1px solid #d5dbe3;
+.vazio {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
 }
 
-th, td{
-    padding:12px;
-    border-bottom:1px solid #e5e7eb;
-    text-align:left;
-}
-
-th{
-    background:#1f2937;
-    color:white;
-}
-
-.entrada{
-    color:green;
-    font-weight:bold;
-}
-
-.saida{
-    color:#b91c1c;
-    font-weight:bold;
-}
-
-.voltar{
-    display:inline-block;
-    margin-top:20px;
-    background:#1f2937;
-    color:white;
-    padding:12px 18px;
-    text-decoration:none;
-    border-radius:5px;
+.codigo {
+    color: #64748b;
+    font-size: 13px;
 }
 </style>
 </head>
@@ -77,35 +52,80 @@ th{
 <body>
 
 <div class="topo">
-    <h1>Histórico de Movimentações</h1>
+    <div>
+        <h1>FindWare</h1>
+        <span>Sistema Inteligente de Localização de Produtos</span>
+    </div>
+
+    <span>Histórico de Movimentações</span>
 </div>
 
 <div class="container">
 
-<table>
-<tr>
-    <th>Produto</th>
-    <th>Quantidade</th>
-    <th>Tipo</th>
-    <th>Localização / Motivo</th>
-    <th>Data</th>
-</tr>
+    <div class="card">
 
-<?php while($mov = mysqli_fetch_assoc($resultado)): ?>
-<tr>
-    <td><?php echo $mov['produto']; ?></td>
-    <td><?php echo $mov['quantidade']; ?></td>
-    <td class="<?php echo strtolower($mov['tipo']); ?>">
-        <?php echo $mov['tipo']; ?>
-    </td>
-    <td><?php echo $mov['localizacao']; ?></td>
-    <td><?php echo $mov['data_movimentacao']; ?></td>
-</tr>
-<?php endwhile; ?>
+        <div class="titulo">
+            <h2>Histórico de Movimentações</h2>
+            <p>Consulte todas as entradas e saídas registradas no estoque.</p>
+        </div>
 
-</table>
+        <div class="tabela-container">
 
-<a class="voltar" href="menu.php">Voltar ao menu</a>
+            <table>
+                <tr>
+                    <th>Produto</th>
+                    <th>Código</th>
+                    <th>Quantidade</th>
+                    <th>Tipo</th>
+                    <th>Localização / Motivo</th>
+                    <th>Data</th>
+                </tr>
+
+                <?php if(mysqli_num_rows($resultado) > 0): ?>
+
+                    <?php while($mov = mysqli_fetch_assoc($resultado)): ?>
+                    <tr>
+                        <td><?php echo $mov['produto']; ?></td>
+
+                        <td class="codigo">
+                            <?php echo $mov['codigo_barras'] ?? '-'; ?>
+                        </td>
+
+                        <td><?php echo $mov['quantidade']; ?></td>
+
+                        <td>
+                            <span class="badge <?php echo strtolower($mov['tipo']); ?>">
+                                <?php echo $mov['tipo']; ?>
+                            </span>
+                        </td>
+
+                        <td><?php echo $mov['localizacao']; ?></td>
+
+                        <td><?php echo $mov['data_movimentacao']; ?></td>
+                    </tr>
+                    <?php endwhile; ?>
+
+                <?php else: ?>
+
+                    <tr>
+                        <td colspan="6" class="vazio">
+                            Nenhuma movimentação registrada até o momento.
+                        </td>
+                    </tr>
+
+                <?php endif; ?>
+
+            </table>
+
+        </div>
+
+        <div class="acoes">
+            <a href="menu.php" class="btn btn-secundario">Voltar ao Menu</a>
+            <a href="recebimento.php" class="btn">Novo Recebimento</a>
+            <a href="saida_produto.php" class="btn btn-secundario">Nova Saída</a>
+        </div>
+
+    </div>
 
 </div>
 
