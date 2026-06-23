@@ -116,7 +116,46 @@ $estoqueBaixo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total
     font-size: 13px;
     color: #64748b;
 }
+.usuario-logado {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    padding: 10px 16px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
 
+.usuario-label {
+    color: #cbd5e1;
+    font-size: 13px;
+}
+
+.usuario-logado strong {
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+.topo-acoes {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.btn-sair-topo {
+    background: #b91c1c;
+    color: white;
+    text-decoration: none;
+    padding: 13px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.btn-sair-topo:hover {
+    background: #991b1b;
+}
 @media(max-width: 1100px) {
     .indicadores {
         grid-template-columns: repeat(2, 1fr);
@@ -144,7 +183,14 @@ $estoqueBaixo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total
         <span>Sistema Inteligente de Localização de Produtos</span>
     </div>
 
-    <span>Usuário: <?php echo $_SESSION['usuario']; ?></span>
+    <div class="topo-acoes">
+        <div class="usuario-logado">
+            <span class="usuario-label">Usuário:</span>
+            <strong><?php echo $_SESSION['usuario']; ?></strong>
+        </div>
+
+        <a href="logout.php" class="btn-sair-topo">Sair do Sistema</a>
+    </div>
 </div>
 
 <div class="container">
@@ -198,7 +244,7 @@ $estoqueBaixo = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) AS total
             <a class="item-menu" href="procurar_produto.php">Procurar Produto Perdido</a>
             <a class="item-menu" href="movimentacoes.php">Histórico de Movimentações</a>
             <a class="item-menu" href="scanner.php">Scanner</a>
-            <a class="item-menu item-sair" href="logout.php">Sair do Sistema</a>
+            
         </div>
 
     </div>
