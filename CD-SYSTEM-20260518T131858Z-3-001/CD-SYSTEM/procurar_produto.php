@@ -145,7 +145,9 @@ if (isset($_GET['busca'])) {
 
         <div class="titulo">
             <h2>Procurar Produto Perdido</h2>
-            <p>Simule a busca de um produto dentro do centro de distribuição usando sinal de proximidade e alerta sonoro.</p>
+            <p>
+                Simule a busca de um produto dentro do centro de distribuição usando sinal de proximidade e alerta sonoro.
+            </p>
         </div>
 
         <form method="GET">
@@ -153,16 +155,24 @@ if (isset($_GET['busca'])) {
             <label>Produto ou código</label>
 
             <div class="campo-busca">
-                <input 
-                    type="text" 
-                    name="busca" 
+                <input
+                    type="text"
+                    name="busca"
                     placeholder="Digite ou bipe o código do produto"
                     required>
 
-                <button type="submit">Buscar Produto</button>
+                <button type="submit">
+                    Buscar Produto
+                </button>
             </div>
 
         </form>
+
+        <div class="acoes">
+            <a href="menu.php" class="btn btn-secundario">
+                Voltar ao Menu
+            </a>
+        </div>
 
     </div>
 
@@ -201,7 +211,9 @@ if (isset($_GET['busca'])) {
 
                 <div class="titulo">
                     <h2>Busca por proximidade</h2>
-                    <p>Inicie a busca para simular a aproximação do operador até o produto.</p>
+                    <p>
+                        Inicie a busca para simular a aproximação do operador até o produto.
+                    </p>
                 </div>
 
                 <div class="acoes">
@@ -222,36 +234,61 @@ if (isset($_GET['busca'])) {
                     <div id="progresso"></div>
                 </div>
 
-                <form id="formAtualizar" class="form-atualizar" action="atualizar_localizacao.php" method="POST">
+                <form
+                    id="formAtualizar"
+                    class="form-atualizar"
+                    action="atualizar_localizacao.php"
+                    method="POST">
 
                     <div class="titulo">
                         <h2>Atualizar localização</h2>
-                        <p>Use esta área caso o produto tenha sido encontrado em outro local.</p>
+                        <p>
+                            Use esta área caso o produto tenha sido encontrado em outro local.
+                        </p>
                     </div>
 
-                    <input type="hidden" name="codigo_barras" value="<?php echo $produto['codigo_barras']; ?>">
+                    <input
+                        type="hidden"
+                        name="codigo_barras"
+                        value="<?php echo $produto['codigo_barras']; ?>">
 
                     <div class="form-grid">
 
                         <div class="form-group">
                             <label>Novo corredor</label>
-                            <input type="text" name="corredor" placeholder="Ex: B" required>
+                            <input
+                                type="text"
+                                name="corredor"
+                                placeholder="Ex: B"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label>Nova prateleira</label>
-                            <input type="number" name="prateleira" placeholder="Ex: 2" min="1" required>
+                            <input
+                                type="number"
+                                name="prateleira"
+                                placeholder="Ex: 2"
+                                min="1"
+                                required>
                         </div>
 
                         <div class="form-group">
                             <label>Novo nível</label>
-                            <input type="number" name="nivel" placeholder="Ex: 1" min="1" required>
+                            <input
+                                type="number"
+                                name="nivel"
+                                placeholder="Ex: 1"
+                                min="1"
+                                required>
                         </div>
 
                     </div>
 
                     <div class="acoes">
-                        <button type="submit">Salvar Nova Localização</button>
+                        <button type="submit">
+                            Salvar Nova Localização
+                        </button>
                     </div>
 
                 </form>
@@ -262,18 +299,25 @@ if (isset($_GET['busca'])) {
 
         <audio id="beep" src="beep.mp3" loop></audio>
 
-    <?php elseif(isset($_GET['busca'])): ?>
+    <?php elseif (isset($_GET['busca'])): ?>
 
         <div class="card nao-encontrado">
 
             <div class="titulo">
                 <h2>Produto não encontrado</h2>
-                <p>Nenhum produto foi encontrado com o código ou nome informado.</p>
+                <p>
+                    Nenhum produto foi encontrado com o código ou nome informado.
+                </p>
             </div>
 
             <div class="acoes">
-                <a href="procurar_produto.php" class="btn">Tentar Novamente</a>
-                <a href="menu.php" class="btn btn-secundario">Voltar ao Menu</a>
+                <a href="procurar_produto.php" class="btn">
+                    Tentar Novamente
+                </a>
+
+                <a href="menu.php" class="btn btn-secundario">
+                    Voltar ao Menu
+                </a>
             </div>
 
         </div>

@@ -15,7 +15,8 @@ $resultado = mysqli_query($conn, $sql);
 
 if(mysqli_num_rows($resultado) > 0){
 
-    $_SESSION['usuario'] = $email;
+    $usuario = mysqli_fetch_assoc($resultado);
+    $_SESSION['usuario'] = $usuario['nome'];
 
     header("Location: menu.php");
     exit;
