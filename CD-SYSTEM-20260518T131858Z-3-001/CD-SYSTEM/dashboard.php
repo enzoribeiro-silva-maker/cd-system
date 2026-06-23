@@ -168,8 +168,7 @@ $ultimas = mysqli_query($conn, "SELECT * FROM movimentacoes ORDER BY data_movime
             </div>
         </div>
 
-        <div class="card-ind
-        icador">
+        <div class="card-indicador">
             <h3>Total em Estoque</h3>
             <div class="numero">
                 <?php echo $totalEstoque['total'] ?? 0; ?>
